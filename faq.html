@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ en contact | Vernast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+</head>
+<body data-page="faq" class="bg-ink text-slate-200 font-sans antialiased overflow-x-hidden">
+<main class="max-w-4xl mx-auto px-4 pt-14">
+  <h1 class="font-display font-extrabold text-5xl text-white animate-rise">Veelgestelde vragen</h1>
+  <p class="mt-3 text-slate-400">Staat uw vraag er niet bij? Stuur ze ons via het formulier onderaan.</p>
+  <div class="mt-8 space-y-3" id="faq"></div>
+
+  <section id="contact" class="mt-20 rounded-[2.5rem] bg-panel border border-white/10 p-6 md:p-10 grid md:grid-cols-2 gap-8">
+    <div>
+      <h2 class="font-display text-3xl font-bold text-white">Contacteer Vernast</h2>
+      <p class="mt-3 text-slate-300">Vraag een plaatsbezoek of vaste prijsofferte aan. We antwoorden binnen twee werkdagen.</p>
+      <p class="mt-6 text-sm text-slate-400"><i class="bi bi-envelope mr-2 text-aqua"></i>info@vernast.example<br><i class="bi bi-telephone mr-2 text-aqua"></i>+32 3 000 00 00</p>
+    </div>
+    <div class="space-y-3">
+      <input class="w-full rounded-2xl bg-ink border border-white/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-aqua" placeholder="Naam" aria-label="Naam">
+      <input type="email" class="w-full rounded-2xl bg-ink border border-white/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-aqua" placeholder="E-mailadres" aria-label="E-mailadres">
+      <select class="w-full rounded-2xl bg-ink border border-white/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-aqua" aria-label="Onderwerp"><option>Plaatsbezoek aanvragen</option><option>Vraag over het toestel</option><option>Filter bestellen</option></select>
+      <textarea rows="3" class="w-full rounded-2xl bg-ink border border-white/10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-aqua" placeholder="Uw bericht" aria-label="Bericht"></textarea>
+      <button id="send" class="w-full rounded-full bg-aqua text-ink font-bold py-3 hover:bg-white active:scale-95 transition">Verstuur aanvraag</button>
+    </div>
+  </section>
+</main>
+<script src="js/site.js"></script>
+<script>
+const qa = [
+  ['Wat is het verschil met de gewone AEROPLUS WRG?', 'De smart-variant heeft een wifi-module voor de SIEGENIA Comfort App en een extra CO₂-sensor. Daardoor kan Vernast uw luchtkwaliteit live tonen.'],
+  ['Heb ik één toestel per kamer nodig?', 'Ja. Het toestel verzorgt aan- en afvoerlucht voor één ruimte, daarom is er slechts één toestel per kamer nodig.'],
+  ['Hoe vaak moet de filter vervangen worden?', 'Ongeveer om de 6 maanden. Het portaal houdt een timer bij en verwittigt u vooraf, zodat u op tijd een nieuwe filter kunt bestellen.'],
+  ['Wat doet Sleep Air?', 'Sleep Air houdt het toestel tijdens uw slaapuren op een stille stand. Stijgt de CO₂ boven uw grens, dan ventileert het even sterker en keert daarna terug naar stil.'],
+  ['Kan ik het toestel bedienen zonder internet?', 'Ja, via de touchbediening op het toestel. Voor de portaalfuncties is wifi nodig.'],
+  ['Wat is passieve koeling?', 'In de zomer kunt u de warmteterugwinning tijdelijk uitschakelen. Het toestel brengt dan koelere buitenlucht binnen zonder de warmte van binnen terug te geven.'],
+  ['Moet er een gat in de muur?', 'Ja, één kerngatboring van 160 mm. Vernast doet dit netjes en stofarm.']
+];
+document.getElementById('faq').innerHTML = qa.map((x, i) => `
+  <details class="group rounded-3xl bg-panel border border-white/10 open:border-aqua/60 transition" ${i === 0 ? 'open' : ''}>
+    <summary class="cursor-pointer list-none flex justify-between items-center gap-4 p-5 font-display text-lg font-bold text-white">${x[0]}<i class="bi bi-plus-lg text-aqua transition group-open:rotate-45"></i></summary>
+    <p class="px-5 pb-5 text-slate-300">${x[1]}</p></details>`).join('');
+document.getElementById('send').onclick = () => toast('Bedankt, Vernast neemt snel contact met u op.');
+</script>
+</body>
+</html>

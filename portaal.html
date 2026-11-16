@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klantenportaal | Vernast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+</head>
+<body data-page="portaal" data-nofooter class="bg-ink text-slate-200 font-sans antialiased overflow-x-hidden">
+
+<div class="max-w-7xl mx-auto px-4 py-6 pb-28 lg:pb-10 lg:grid lg:grid-cols-[220px_1fr] lg:gap-8">
+  <aside class="hidden lg:block"><div class="sticky top-24">
+    <div id="side" class="space-y-1"></div>
+    <div class="mt-6 rounded-3xl bg-panel border border-white/10 p-4 text-sm">
+      <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-violet grid place-items-center font-bold text-white">JD</div><div><div class="text-white font-medium">Jan Demo</div><div class="text-xs text-slate-400">Klant van Vernast</div></div></div>
+      <button id="logout" class="mt-3 w-full text-left text-slate-400 hover:text-white"><i class="bi bi-box-arrow-right mr-2"></i>Afmelden</button>
+    </div>
+  </div></aside>
+
+  <main>
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+      <div><h1 class="font-display text-3xl md:text-4xl font-extrabold text-white" id="hello">Goedendag</h1><p class="text-slate-400 text-sm">Demo met fictieve data. De waarden veranderen om de 3 seconden.</p></div>
+      <div class="flex items-center gap-2">
+        <span class="flex items-center gap-2 text-sm px-3 py-2 rounded-full bg-emerald-500/15 text-emerald-300"><span class="relative flex w-2.5 h-2.5"><span class="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span><span class="relative w-2.5 h-2.5 rounded-full bg-emerald-400"></span></span>Live</span>
+        <select class="rounded-full bg-panel border border-white/10 px-4 py-2 text-sm text-white" aria-label="Kamer"><option>Slaapkamer</option><option>Bureau</option></select>
+      </div>
+    </div>
+
+    <!-- OVERZICHT -->
+    <section data-view="over" class="space-y-4">
+      <div class="rounded-[2rem] bg-gradient-to-br from-violet/40 via-panel to-aqua/20 border border-white/10 p-6 md:p-8 grid md:grid-cols-[auto_1fr] gap-6 items-center">
+        <div class="relative w-40 h-40 mx-auto">
+          <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90 text-aqua" id="scoreRing"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-opacity=".15" stroke-width="9"/><circle id="scoreC" cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-dasharray="0 251.3" class="transition-all duration-1000"/></svg>
+          <div class="absolute inset-0 grid place-items-center text-center"><div><div id="score" class="font-display text-5xl font-extrabold text-white">0</div><div class="text-xs text-slate-300">luchtscore</div></div></div>
+        </div>
+        <div>
+          <h2 class="font-display text-2xl md:text-3xl font-bold text-white" id="scoreTxt">De lucht is fris</h2>
+          <p class="text-slate-300 mt-1" id="scoreSub">Slaapkamer</p>
+          <div class="mt-4 flex flex-wrap gap-2 text-sm">
+            <span class="px-3 py-1.5 rounded-full bg-white/10"><i class="bi bi-cpu mr-1 text-aqua"></i>Modus <b id="c-mode" class="text-white">Auto</b></span>
+            <span class="px-3 py-1.5 rounded-full bg-white/10"><i class="bi bi-fan mr-1 text-sun"></i>Stand <b id="c-lvl" class="text-white">2</b></span>
+            <span class="px-3 py-1.5 rounded-full bg-white/10"><i class="bi bi-fire mr-1 text-coral"></i>Warmteterugwinning <b id="c-wtw" class="text-white">91 %</b></span>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <button data-q="boost" class="px-4 py-2 rounded-full bg-aqua text-ink font-semibold active:scale-95 transition"><i class="bi bi-lightning-charge-fill mr-1"></i>Boost 15 min</button>
+            <button data-q="sleep" class="px-4 py-2 rounded-full bg-violet text-white font-semibold active:scale-95 transition"><i class="bi bi-moon-stars-fill mr-1"></i>Sleep Air nu</button>
+            <button data-q="auto" class="px-4 py-2 rounded-full border border-white/20 text-white active:scale-95 transition">Terug naar Auto</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="cards" class="grid grid-cols-2 xl:grid-cols-4 gap-3"></div>
+
+      <div class="grid lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 rounded-3xl bg-panel border border-white/10 p-5">
+          <div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-display text-xl font-bold text-white">Afgelopen 24 uur</h3><div id="ovTabs" class="flex gap-1 text-sm"></div></div>
+          <svg id="ovChart" class="w-full h-44 mt-3 text-aqua" viewBox="0 0 600 160" preserveAspectRatio="none" role="img" aria-label="Verloop 24 uur"></svg>
+          <div class="flex justify-between text-xs text-slate-500"><span>-24 u</span><span>-12 u</span><span>nu</span></div>
+        </div>
+        <div class="rounded-3xl bg-panel border border-white/10 p-5">
+          <h3 class="font-display text-xl font-bold text-white">Advies voor nu</h3>
+          <ul id="tips" class="mt-3 space-y-3 text-sm"></ul>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="rounded-3xl bg-sun text-ink p-5"><div class="text-sm font-medium"><i class="bi bi-funnel mr-1"></i>Filter Care</div><div class="font-display text-4xl font-extrabold mt-1"><span class="fdays">57</span> dagen</div><div class="text-sm">tot de volgende vervanging</div><button data-go="filt" class="mt-3 text-sm font-bold underline">Naar Filter Care</button></div>
+        <div class="rounded-3xl bg-violet text-white p-5"><div class="text-sm font-medium"><i class="bi bi-moon-stars mr-1"></i>Volgende schema</div><div class="font-display text-2xl font-extrabold mt-1">Sleep Air 22:30</div><div class="text-sm opacity-90">Stand 1 tot 07:00</div><button data-go="modi" class="mt-3 text-sm font-bold underline">Modi beheren</button></div>
+        <div class="rounded-3xl bg-coral text-ink p-5"><div class="text-sm font-medium"><i class="bi bi-bell mr-1"></i>Meldingen</div><div class="font-display text-4xl font-extrabold mt-1"><span class="unread">2</span> nieuw</div><div class="text-sm">Laatste: filter over 57 dagen</div><button data-go="meld" class="mt-3 text-sm font-bold underline">Bekijk meldingen</button></div>
+      </div>
+    </section>
+
+    <!-- LUCHTKWALITEIT -->
+    <section data-view="lucht" class="hidden space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div id="lcTabs" class="flex flex-wrap gap-2"></div>
+        <div class="flex gap-1 rounded-full bg-panel p-1 text-sm"><button data-r="24" class="rg px-4 py-1.5 rounded-full">24 uur</button><button data-r="7" class="rg px-4 py-1.5 rounded-full">7 dagen</button></div>
+      </div>
+      <div class="rounded-3xl bg-panel border border-white/10 p-5">
+        <div class="flex items-end justify-between"><div><div class="text-sm text-slate-400" id="lcName">CO₂</div><div class="font-display text-5xl font-extrabold text-white"><span id="lcVal">0</span> <span class="text-lg text-slate-400" id="lcUnit">ppm</span></div></div><span id="lcBadge" class="px-3 py-1 rounded-full text-sm bg-white/10">Goed</span></div>
+        <svg id="lcChart" class="w-full h-56 mt-4 text-aqua" viewBox="0 0 600 160" preserveAspectRatio="none" role="img" aria-label="Verloop"></svg>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-center">
+        <div class="rounded-3xl bg-panel p-4"><div class="text-xs text-slate-400">Laagste</div><div id="stMin" class="font-display text-2xl font-bold text-white">0</div></div>
+        <div class="rounded-3xl bg-panel p-4"><div class="text-xs text-slate-400">Gemiddeld</div><div id="stAvg" class="font-display text-2xl font-bold text-white">0</div></div>
+        <div class="rounded-3xl bg-panel p-4"><div class="text-xs text-slate-400">Hoogste</div><div id="stMax" class="font-display text-2xl font-bold text-white">0</div></div>
+      </div>
+      <div class="rounded-3xl bg-panel border border-white/10 p-5">
+        <h3 class="font-display text-xl font-bold text-white">Waar staat uw waarde?</h3>
+        <div class="relative mt-8"><div id="scale" class="flex h-4 rounded-full overflow-hidden"></div><div id="marker" class="absolute -top-6 -translate-x-1/2 transition-all duration-1000 text-white"><i class="bi bi-caret-down-fill"></i></div></div>
+        <div id="scaleLbl" class="flex justify-between text-xs text-slate-400 mt-2"></div>
+        <p id="lcInfo" class="mt-4 text-slate-300"></p>
+      </div>
+    </section>
+
+    <!-- BEDIENING -->
+    <section data-view="bed" class="hidden space-y-4">
+      <div class="grid lg:grid-cols-2 gap-4">
+        <div class="rounded-3xl bg-panel border border-white/10 p-6 text-center">
+          <button id="power" class="mx-auto w-32 h-32 rounded-full grid place-items-center text-5xl transition active:scale-95" aria-label="Aan of uit"><i class="bi bi-power"></i></button>
+          <div id="pwTxt" class="mt-3 font-display text-2xl font-bold text-white">Aan</div>
+          <div class="mt-5 flex items-center justify-center gap-4"><i id="fan" class="bi bi-fan text-5xl text-aqua inline-block animate-spin motion-reduce:animate-none"></i><div class="text-left"><div class="text-sm text-slate-400">Luchtdebiet</div><div class="font-display text-2xl font-bold text-white"><span id="flowv">40</span> m³/u</div></div></div>
+          <label for="lvl" class="block mt-6 text-sm text-slate-400">Ventilatiestand <b id="lvlv" class="text-white text-lg">2</b></label>
+          <input id="lvl" type="range" min="1" max="3" value="2" class="w-full mt-2 accent-aqua">
+          <div class="flex justify-between text-xs text-slate-500"><span>Fluisterstil</span><span>Normaal</span><span>Krachtig</span></div>
+          <div id="boostBox" class="hidden mt-4 rounded-2xl bg-aqua/15 text-aqua py-3"><i class="bi bi-lightning-charge-fill mr-1"></i>Boost nog <b id="boostT">15:00</b></div>
+        </div>
+        <div class="space-y-4">
+          <div class="rounded-3xl bg-panel border border-white/10 p-5"><h3 class="font-display text-xl font-bold text-white mb-3">Modus</h3><div id="modes" class="grid grid-cols-2 gap-3"></div></div>
+          <div class="rounded-3xl bg-panel border border-white/10 p-5"><h3 class="font-display text-xl font-bold text-white mb-3">Tijdelijke boost</h3><div class="grid grid-cols-3 gap-2"><button data-b="15" class="bb py-3 rounded-2xl bg-white/10 hover:bg-aqua hover:text-ink transition">15 min</button><button data-b="30" class="bb py-3 rounded-2xl bg-white/10 hover:bg-aqua hover:text-ink transition">30 min</button><button data-b="60" class="bb py-3 rounded-2xl bg-white/10 hover:bg-aqua hover:text-ink transition">60 min</button></div></div>
+        </div>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-4">
+        <div class="rounded-3xl bg-panel border border-white/10 p-5"><h3 class="font-display text-xl font-bold text-white mb-3">Luchtrichting</h3><div id="dirs" class="grid gap-2"></div></div>
+        <div class="rounded-3xl bg-panel border border-white/10 p-5 space-y-2"><h3 class="font-display text-xl font-bold text-white mb-1">Extra</h3>
+          <div data-sw="summer|Zomerstand|0|Warmteterugwinning uit voor passieve koeling"></div>
+          <div data-sw="lock|Touchbediening vergrendelen|0|Voorkomt per ongeluk wijzigen op het toestel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODI EN AUTOMATISATIES -->
+    <section data-view="modi" class="hidden space-y-4">
+      <div class="rounded-[2rem] bg-gradient-to-br from-violet/50 to-panel border border-violet/40 p-6">
+        <div class="flex items-start justify-between gap-4"><div><h2 class="font-display text-2xl font-bold text-white"><i class="bi bi-moon-stars-fill text-violet mr-2"></i>Sleep Air</h2><p class="text-slate-300 text-sm mt-1">Stiller ventileren tijdens de nacht, met inzicht in hoe de lucht in uw slaapkamer evolueert.</p></div><div data-sw="sleepOn||1"></div></div>
+        <div class="grid sm:grid-cols-3 gap-3 mt-5">
+          <label class="text-sm text-slate-300">Start<input id="sStart" type="time" value="22:30" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"></label>
+          <label class="text-sm text-slate-300">Einde<input id="sEnd" type="time" value="07:00" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"></label>
+          <label class="text-sm text-slate-300">Maximale stand<select id="sLvl" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"><option value="1">1, fluisterstil</option><option value="2">2, stil</option></select></label>
+          
+        </div>
+        <div class="mt-4 rounded-2xl bg-ink/60 p-4">
+          <div class="flex flex-wrap justify-between items-baseline gap-2"><span class="text-sm text-slate-300">Ventileer even harder als CO₂ boven</span><span><b id="sCv" class="text-white text-lg">1000 ppm</b> <span id="sCz" class="text-sm font-medium"></span></span></div>
+          <input id="sC" type="range" min="600" max="1600" step="50" value="1000" class="mt-3 w-full accent-violet" aria-label="CO₂-grens">
+          <div id="sBar"></div>
+          <p class="text-xs text-slate-400 mt-2">Onder 800 ppm is de lucht fris, boven 1200 ppm is ze hoog. Wij raden 1000 ppm aan voor de nacht.</p>
+        </div>
+        <div class="mt-6 grid md:grid-cols-[1fr_auto] gap-5 items-end">
+          <div><div class="text-sm text-slate-300 mb-1">CO₂ afgelopen nacht</div><svg id="nChart" class="w-full h-32 text-violet" viewBox="0 0 600 120" preserveAspectRatio="none" role="img" aria-label="Nachtverloop"></svg><div class="flex justify-between text-xs text-slate-500"><span>22:30</span><span>03:00</span><span>07:00</span></div></div>
+          <div class="grid grid-cols-3 md:grid-cols-1 gap-2 text-center md:text-left text-sm"><div class="rounded-2xl bg-ink/60 px-4 py-2">Gemiddeld <b id="nAvg" class="text-white block">0</b></div><div class="rounded-2xl bg-ink/60 px-4 py-2">Piek <b id="nMax" class="text-white block">0</b></div><div class="rounded-2xl bg-ink/60 px-4 py-2">Moment van de piek <b id="nAt" class="text-white block">0</b></div></div>
+        </div>
+        <p class="mt-4 text-sm text-slate-300">Stijgt CO₂ boven de grens, dan schakelt het toestel kort een stand hoger en keert daarna terug naar stil.</p>
+      </div>
+
+      <div class="rounded-3xl bg-panel border border-white/10 p-5">
+        <h3 class="font-display text-xl font-bold text-white mb-3">Eigen modi</h3>
+        <div id="myModes" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3"></div>
+        <div class="mt-5 pt-5 border-t border-white/10 grid sm:grid-cols-5 gap-2 items-end">
+          <label class="text-sm text-slate-300 sm:col-span-2">Nieuwe modus<input id="mName" placeholder="Bijvoorbeeld Gasten" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"></label>
+          <label class="text-sm text-slate-300">Stand<select id="mLvl" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"><option>1</option><option selected>2</option><option>3</option></select></label>
+          <label class="text-sm text-slate-300">Richting<select id="mDir" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"><option value="0">Aan en afvoer</option><option value="1">Alleen aanvoer</option><option value="2">Alleen afvoer</option></select></label>
+          <button id="mAdd" class="rounded-full bg-aqua text-ink font-bold py-2.5 active:scale-95 transition">Modus opslaan</button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-panel border border-white/10 p-5">
+        <h3 class="font-display text-xl font-bold text-white mb-3">Automatisaties</h3>
+        <ul id="autos" class="divide-y divide-white/10"></ul>
+        <div class="mt-5 pt-5 border-t border-white/10">
+          <h4 class="font-display text-lg font-bold text-white mb-3">Nieuwe automatisering</h4>
+          <div class="grid sm:grid-cols-3 gap-2">
+            <label class="text-sm text-slate-300">Naam<input id="aName" placeholder="Bijvoorbeeld Avondboost" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"></label>
+            <label class="text-sm text-slate-300">Als<select id="aTrig" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"><option>CO₂ boven</option><option>TVOC boven</option><option>Fijnstof boven</option><option>Temperatuur boven</option><option>Temperatuur onder</option><option>Tijd is</option></select></label>
+            <label class="text-sm text-slate-300">Dan<select id="aAct" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"><option>Stand 1</option><option>Stand 2</option><option>Stand 3</option><option>Sleep Air starten</option><option>Alleen afvoer</option></select></label>
+          </div>
+          <div id="aBox" class="mt-3 rounded-2xl bg-ink/60 p-4"></div>
+          <div class="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-300">Dagen <span id="days" class="flex flex-wrap gap-1"></span></div>
+          <button id="aAdd" class="mt-4 w-full sm:w-auto px-8 rounded-full bg-aqua text-ink font-bold py-2.5 active:scale-95 transition">Automatisering toevoegen</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER CARE -->
+    <section data-view="filt" class="hidden space-y-4">
+      <div class="grid lg:grid-cols-2 gap-4">
+        <div class="rounded-[2rem] bg-gradient-to-br from-sun/30 to-panel border border-sun/40 p-6 text-center">
+          <div class="relative w-52 h-52 mx-auto"><svg viewBox="0 0 100 100" class="w-full h-full -rotate-90 text-sun" id="fRing"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-opacity=".15" stroke-width="8"/><circle id="fC" cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 251.3" class="transition-all duration-1000"/></svg>
+            <div class="absolute inset-0 grid place-items-center"><div><div class="font-display text-6xl font-extrabold text-white fdays">57</div><div class="text-sm text-slate-300">dagen over</div></div></div></div>
+          <div id="fBadge" class="inline-block mt-4 px-4 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-sm">In orde</div>
+          <div class="grid grid-cols-3 gap-2 mt-5 text-sm"><div class="rounded-2xl bg-ink/50 p-3"><div class="text-slate-400 text-xs">Geplaatst</div>20 mei 2026</div><div class="rounded-2xl bg-ink/50 p-3"><div class="text-slate-400 text-xs">Levensduur</div>± 6 maanden</div><div class="rounded-2xl bg-ink/50 p-3"><div class="text-slate-400 text-xs">Vervangen op</div><span id="fDate">-</span></div></div>
+        </div>
+        <div class="rounded-3xl bg-panel border border-white/10 p-5 space-y-3">
+          <h3 class="font-display text-xl font-bold text-white">Herinneringen</h3>
+          <label class="block text-sm text-slate-300">Verwittig mij vooraf<select id="fRem" class="mt-1 w-full rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"><option value="30">30 dagen</option><option value="14" selected>14 dagen</option><option value="7">7 dagen</option></select></label>
+          <div data-sw="fMail|E-mail|1"></div><div data-sw="fPush|Pushmelding in de app|1"></div>
+          <div class="grid gap-2 pt-2">
+            <button id="fTest" class="py-3 rounded-full border border-white/20 text-white hover:bg-white/10 active:scale-95 transition"><i class="bi bi-bell mr-1"></i>Testmelding sturen</button>
+            <button id="fReset" class="py-3 rounded-full bg-sun text-ink font-bold active:scale-95 transition"><i class="bi bi-arrow-repeat mr-1"></i>Filter vervangen, timer resetten</button>
+            <a href="faq.html#contact" class="py-3 rounded-full bg-white/10 text-center text-white hover:bg-white/20 transition"><i class="bi bi-cart mr-1"></i>Nieuwe filter bestellen</a>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-3xl bg-panel border border-white/10 p-5"><h3 class="font-display text-xl font-bold text-white mb-3">Filtergeschiedenis</h3>
+        <div class="overflow-x-auto"><table class="w-full text-sm min-w-[420px]"><thead class="text-left text-slate-400"><tr><th class="py-2">Datum</th><th>Gebeurtenis</th><th>Type</th></tr></thead><tbody class="divide-y divide-white/10"><tr><td class="py-2">20 mei 2026</td><td>Installatie door Vernast</td><td>Fijnstoffilter</td></tr><tr><td class="py-2">20 mei 2026</td><td>Timer gestart: 6 maanden</td><td>Filter Care</td></tr></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- MELDINGEN EN TOESTEL -->
+    <section data-view="meld" class="hidden space-y-4">
+      <div class="grid lg:grid-cols-5 gap-4">
+        <div class="lg:col-span-3 rounded-3xl bg-panel border border-white/10 p-5">
+          <div class="flex justify-between items-center mb-3"><h3 class="font-display text-xl font-bold text-white">Meldingen</h3><button id="readAll" class="text-sm text-aqua hover:underline">Alles gelezen</button></div>
+          <ul id="notes" class="space-y-2"></ul>
+        </div>
+        <div class="lg:col-span-2 space-y-4">
+          <div class="rounded-3xl bg-panel border border-white/10 p-5 space-y-2"><h3 class="font-display text-xl font-bold text-white mb-1">Voorkeuren</h3><div data-sw="nCo2|Hoge CO₂-waarde|1"></div><div data-sw="nFil|Filter bijna aan vervanging toe|1"></div><div data-sw="nOff|Toestel offline|1"></div><div data-sw="nTip|Wekelijkse luchtrapport|0"></div></div>
+        </div>
+      </div>
+      <div class="rounded-3xl bg-panel border border-white/10 p-5"><h3 class="font-display text-xl font-bold text-white mb-3">Mijn toestel</h3>
+        <dl class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+          <div class="rounded-2xl bg-ink/60 p-4"><dt class="text-slate-400">Model</dt><dd class="text-white font-medium">AEROPLUS WRG smart</dd></div>
+          <div class="rounded-2xl bg-ink/60 p-4"><dt class="text-slate-400">Serienummer</dt><dd class="text-white font-medium">AP-WRG-0048213</dd></div>
+          <div class="rounded-2xl bg-ink/60 p-4"><dt class="text-slate-400">Firmware</dt><dd class="text-white font-medium">v1.4.2 (actueel)</dd></div>
+          <div class="rounded-2xl bg-ink/60 p-4"><dt class="text-slate-400">Wifi-signaal</dt><dd class="mt-1 h-2 rounded-full bg-white/10"><div class="h-2 rounded-full bg-aqua w-[82%]"></div></dd></div>
+          <div class="rounded-2xl bg-ink/60 p-4"><dt class="text-slate-400">Geïnstalleerd op</dt><dd class="text-white font-medium">20 mei 2026</dd></div>
+          <div class="rounded-2xl bg-ink/60 p-4"><dt class="text-slate-400">Installateur</dt><dd class="text-white font-medium">Vernast</dd></div>
+          <div class="rounded-2xl bg-ink/60 p-4"><dt class="text-slate-400">Frontkap</dt><dd class="text-white font-medium">Wit</dd></div>
+          <div class="rounded-2xl bg-ink/60 p-4"><dt class="text-slate-400">Garantie</dt><dd class="text-white font-medium">Tot mei 2028</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav id="bottom" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-ink/95 backdrop-blur border-t border-white/10 grid grid-cols-6 pb-[env(safe-area-inset-bottom)]"></nav>
+
+<script src="js/site.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const rnd = (a, b) => a + Math.random() * (b - a), clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const nf = (v, d) => v.toFixed(d).replace('.', ',');
+
+/* ---------- Schakelaars ---------- */
+const sw = (id, label, on, sub = '') => `<label class="flex items-center justify-between gap-4 cursor-pointer py-1"><span>${label ? `<span class="block text-white">${label}</span>` : ''}${sub ? `<span class="block text-xs text-slate-400">${sub}</span>` : ''}</span><input id="${id}" type="checkbox" class="peer sr-only" ${+on ? 'checked' : ''} aria-label="${label || id}"><span class="shrink-0 relative w-12 h-7 rounded-full bg-slate-600 transition peer-checked:bg-aqua peer-focus-visible:ring-2 peer-focus-visible:ring-white after:content-[''] after:absolute after:top-1 after:left-1 after:w-5 after:h-5 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-5"></span></label>`;
+document.querySelectorAll('[data-sw]').forEach(e => { const [i, l, o, s] = e.dataset.sw.split('|'); e.outerHTML = sw(i, l, o, s || ''); });
+
+/* ---------- Navigatie ---------- */
+const NAV = [['over', 'Overzicht', 'bi-grid-1x2'], ['lucht', 'Luchtkwaliteit', 'bi-wind'], ['bed', 'Bediening', 'bi-toggles'], ['modi', 'Modi', 'bi-moon-stars'], ['filt', 'Filter Care', 'bi-funnel'], ['meld', 'Meldingen', 'bi-bell']];
+$('side').innerHTML = NAV.map(n => `<button data-go="${n[0]}" class="nv w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-left transition"><i class="bi ${n[2]} text-lg"></i>${n[1]}${n[0] === 'meld' ? '<span class="unread ml-auto text-xs px-2 rounded-full bg-coral text-ink font-bold">2</span>' : ''}</button>`).join('');
+$('bottom').innerHTML = NAV.map(n => `<button data-go="${n[0]}" class="nv py-2 flex flex-col items-center text-[11px] transition"><i class="bi ${n[2]} text-xl"></i>${n[1].split(' ')[0]}</button>`).join('');
+function go(v) {
+  document.querySelectorAll('[data-view]').forEach(s => { const on = s.dataset.view === v; s.classList.toggle('hidden', !on); if (on) { s.classList.remove('animate-rise'); void s.offsetWidth; s.classList.add('animate-rise'); } });
+  document.querySelectorAll('.nv').forEach(b => { const on = b.dataset.go === v; b.classList.toggle('bg-aqua', on); b.classList.toggle('text-ink', on); b.classList.toggle('text-slate-300', !on); });
+  history.replaceState(null, '', '#' + v); scrollTo({ top: 0 }); refresh();
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) go(b.dataset.go); });
+$('logout').onclick = () => toast('Dit is een demo: afmelden is nog niet actief.');
+const hr = new Date().getHours(); $('hello').textContent = (hr < 12 ? 'Goedemorgen' : hr < 18 ? 'Goedemiddag' : 'Goedenavond') + ', Jan';
+
+/* ---------- Meetdata (fictief) ---------- */
+const M = {
+  co2: { n: 'CO₂', u: 'ppm', d: 0, lo: 400, hi: 1500, ok: 800, warn: 1200, col: 'text-aqua', st: ['Uitstekend', 'Goed', 'Verhoogd'], ic: 'bi-cloud', info: 'CO₂ komt vrij als u ademt en stijgt in een gesloten kamer, vooral ’s nachts. Onder 800 ppm is de lucht fris. Boven 1000 ppm voelen veel mensen zich sloom.' },
+  tvoc: { n: 'TVOC', u: 'mg/m³', d: 2, lo: 0, hi: 0.8, ok: 0.3, warn: 0.5, col: 'text-violet', st: ['Laag', 'Matig', 'Hoog'], ic: 'bi-droplet-half', info: 'TVOC zijn vluchtige stoffen uit verf, meubels, schoonmaak en koken. De waarde stijgt tijdelijk na poetsen of koken en zakt daarna weer.' },
+  pm: { n: 'Fijnstof', u: 'µg/m³', d: 0, lo: 0, hi: 40, ok: 12, warn: 25, col: 'text-sun', st: ['Zuiver', 'Matig', 'Hoog'], ic: 'bi-dust', info: 'Dit is een indicatie van fijnstof in de kamer. Het filter in het toestel houdt stof en pollen tegen. Een lage waarde betekent dat het filter goed werkt.' },
+  temp: { n: 'Temperatuur', u: '°C', d: 1, lo: 16, hi: 28, ok: 23, warn: 25, col: 'text-coral', st: ['Comfortabel', 'Let op', 'Te warm'], ic: 'bi-thermometer-half', info: 'Voor een slaapkamer is 16 tot 19 °C ideaal, voor een leefruimte 20 tot 22 °C. Dankzij de warmteterugwinning daalt de temperatuur nauwelijks bij ventileren.' }
+};
+const BASE = { co2: 642, tvoc: 0.12, pm: 4, temp: 20.5 };
+const SC = ['text-emerald-400', 'text-sun', 'text-coral'];
+const stat = (k, v) => k === 'temp' ? (v < 18 ? 1 : v <= 23 ? 0 : v <= 25 ? 1 : 2) : (v < M[k].ok ? 0 : v < M[k].warn ? 1 : 2);
+function series(k, n, step) { const out = []; let v = BASE[k]; for (let i = 0; i < n; i++) { v = clamp(v + rnd(-1, 1) * (M[k].hi - M[k].lo) * step, M[k].lo + (M[k].hi - M[k].lo) * .05, M[k].hi * .85); out.push(v); } return out; }
+const H = {}, H7 = {}; for (const k in M) { H[k] = series(k, 48, .03); H7[k] = series(k, 56, .06); }
+let cur = 'co2', curOv = 'co2', range = 24;
+
+function area(svg, data, w, h, id) {
+  const mn = Math.min(...data), mx = Math.max(...data), r = (mx - mn) || 1;
+  const p = data.map((v, i) => [(i / (data.length - 1)) * w, h - 10 - ((v - mn) / r) * (h - 20)]);
+  const line = p.map(q => q.join(',')).join(' ');
+  $(svg).innerHTML = `<defs><linearGradient id="g${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".45"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><polygon points="0,${h} ${line} ${w},${h}" fill="url(#g${id})"/><polyline points="${line}" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="${p.at(-1)[0] - 4}" cy="${p.at(-1)[1]}" r="5" fill="currentColor"/>`;
+}
+const setRing = (id, pct) => { $(id).style.strokeDasharray = `${clamp(pct, 0, 1) * 251.3} 251.3`; };
+
+/* Meetkaarten */
+$('cards').innerHTML = Object.keys(M).map(k => `<div class="rounded-3xl bg-panel border border-white/10 p-4 flex items-center justify-between gap-2"><div><div class="text-sm text-slate-400"><i class="bi ${M[k].ic} mr-1"></i>${M[k].n}</div><div class="font-display text-3xl font-extrabold text-white"><span id="v-${k}">0</span></div><div class="text-xs text-slate-400">${M[k].u}</div><div id="s-${k}" class="text-sm font-medium mt-1">-</div></div>
+  <svg id="r-${k}" viewBox="0 0 100 100" class="w-16 h-16 md:w-20 md:h-20 -rotate-90 shrink-0"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-opacity=".15" stroke-width="10"/><circle id="rc-${k}" cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 251.3" class="transition-all duration-1000"/></svg></div>`).join('');
+const tabs = (id, fn, sel) => { $(id).innerHTML = Object.keys(M).map(k => `<button data-k="${k}" class="tb px-3 py-1.5 rounded-full text-sm transition ${k === sel() ? 'bg-white text-ink font-semibold' : 'bg-white/10 text-slate-300 hover:bg-white/20'}">${M[k].n}</button>`).join(''); $(id).onclick = e => { const b = e.target.closest('[data-k]'); if (b) { fn(b.dataset.k); refresh(); } }; };
+
+function refresh() {
+  const v = {}; for (const k in M) v[k] = H[k].at(-1);
+  for (const k in M) {
+    const s = stat(k, v[k]);
+    $('v-' + k).textContent = nf(v[k], M[k].d); $('s-' + k).textContent = M[k].st[s]; $('s-' + k).className = 'text-sm font-medium mt-1 ' + SC[s];
+    $('r-' + k).setAttribute('class', 'w-16 h-16 md:w-20 md:h-20 -rotate-90 shrink-0 ' + SC[s]); setRing('rc-' + k, (v[k] - M[k].lo) / (M[k].hi - M[k].lo));
+  }
+  const score = Math.round(clamp(100 - Math.max(0, v.co2 - 600) / 9 - v.tvoc * 40 - v.pm * 1.2, 0, 100));
+  $('score').textContent = score; setRing('scoreC', score / 100);
+  $('scoreTxt').textContent = score >= 80 ? 'De lucht in uw kamer is fris' : score >= 60 ? 'De lucht is goed, met wat aandacht' : 'De lucht kan beter';
+  $('scoreSub').textContent = 'Berekend uit CO₂, TVOC en fijnstof, bijgewerkt om ' + new Date().toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  tabs('ovTabs', k => curOv = k, () => curOv); area('ovChart', H[curOv], 600, 160, 'o'); $('ovChart').setAttribute('class', 'w-full h-44 mt-3 ' + M[curOv].col);
+  const tips = [];
+  tips.push(stat('co2', v.co2) ? ['bi-exclamation-circle text-sun', 'CO₂ loopt op. Start een Boost van 15 minuten of kies stand 3.'] : ['bi-check-circle text-emerald-400', 'CO₂ is laag. Stand ' + S.lvl + ' volstaat.']);
+  if (stat('tvoc', v.tvoc)) tips.push(['bi-exclamation-circle text-sun', 'TVOC is verhoogd, bijvoorbeeld na koken of poetsen. Laat het toestel even harder draaien.']);
+  tips.push(['bi-moon-stars text-violet', S.sleep ? 'Sleep Air staat aan en start om ' + $('sStart').value + '.' : 'Sleep Air staat uit. Zet het aan voor stille nachten.']);
+  tips.push(left <= +$('fRem').value ? ['bi-funnel text-sun', 'Bestel binnenkort een nieuwe filter: nog ' + left + ' dagen.'] : ['bi-funnel text-emerald-400', 'Uw filter is nog ' + left + ' dagen goed.']);
+  $('tips').innerHTML = tips.map(t => `<li class="flex gap-3"><i class="bi ${t[0]} text-lg"></i><span>${t[1]}</span></li>`).join('');
+  /* Luchtkwaliteit-view */
+  const m = M[cur], data = range === 24 ? H[cur] : H7[cur], s = stat(cur, v[cur]);
+  $('lcName').textContent = m.n; $('lcVal').textContent = nf(v[cur], m.d); $('lcUnit').textContent = m.u;
+  $('lcBadge').textContent = m.st[s]; $('lcBadge').className = 'px-3 py-1 rounded-full text-sm bg-white/10 ' + SC[s];
+  tabs('lcTabs', k => cur = k, () => cur); area('lcChart', data, 600, 160, 'l'); $('lcChart').setAttribute('class', 'w-full h-56 mt-4 ' + m.col);
+  $('stMin').textContent = nf(Math.min(...data), m.d); $('stMax').textContent = nf(Math.max(...data), m.d); $('stAvg').textContent = nf(data.reduce((a, b) => a + b) / data.length, m.d);
+  document.querySelectorAll('.rg').forEach(b => { const on = +b.dataset.r === range; b.className = 'rg px-4 py-1.5 rounded-full ' + (on ? 'bg-white text-ink font-semibold' : 'text-slate-300'); });
+  const span = m.hi - m.lo, pc = x => ((x - m.lo) / span * 100).toFixed(1);
+  $('scale').innerHTML = `<div class="bg-emerald-400" style="width:${pc(m.ok)}%"></div><div class="bg-sun" style="width:${pc(m.warn) - pc(m.ok)}%"></div><div class="bg-coral flex-1"></div>`;
+  $('scaleLbl').innerHTML = `<span>${m.lo}</span><span>${m.ok}</span><span>${m.warn}</span><span>${m.hi}</span>`;
+  $('marker').style.left = clamp(pc(v[cur]), 2, 98) + '%'; $('lcInfo').textContent = m.info;
+}
+document.querySelectorAll('.rg').forEach(b => b.onclick = () => { range = +b.dataset.r; refresh(); });
+setInterval(() => { for (const k in M) { H[k].push(clamp(H[k].at(-1) + rnd(-1, 1) * (M[k].hi - M[k].lo) * .02, M[k].lo + (M[k].hi - M[k].lo) * .05, M[k].hi * .85)); H[k].shift(); } refresh(); }, 3000);
+
+/* ---------- Bediening ---------- */
+const S = { power: true, mode: 'Auto', lvl: 2, dir: 0, sleep: true };
+const MODES = [['Auto', 'bi-magic', 'Past zich aan de sensoren aan'], ['Handmatig', 'bi-hand-index', 'U kiest zelf de stand'], ['Sleep Air', 'bi-moon-stars', 'Stil tijdens de slaapuren'], ['Boost', 'bi-lightning-charge', 'Tijdelijk maximaal']];
+const DIRS = [['Aan- en afvoer met warmteterugwinning', 'bi-arrow-left-right'], ['Alleen aanvoer', 'bi-box-arrow-in-right'], ['Alleen afvoer', 'bi-box-arrow-right']];
+function applyState() {
+  const on = S.power;
+  $('power').className = 'mx-auto w-32 h-32 rounded-full grid place-items-center text-5xl transition active:scale-95 ' + (on ? 'bg-aqua text-ink shadow-[0_0_50px_rgba(45,226,200,.6)]' : 'bg-slate-700 text-slate-400');
+  $('pwTxt').textContent = on ? 'Aan' : 'Uit'; $('c-mode').textContent = on ? S.mode : 'Uit'; $('c-lvl').textContent = on ? S.lvl : '-';
+  $('lvl').value = S.lvl; $('lvlv').textContent = S.lvl; $('flowv').textContent = on ? [0, 20, 40, 60][S.lvl] : 0;
+  const fan = $('fan'); fan.style.animationDuration = (4 / S.lvl) + 's'; fan.classList.toggle('animate-spin', on);
+  $('c-wtw').textContent = $('summer').checked || S.dir ? 'uit' : '91 %';
+  $('modes').innerHTML = MODES.map(m => `<button data-m="${m[0]}" class="p-4 rounded-2xl text-left transition ${S.mode === m[0] ? 'bg-aqua/15 ring-2 ring-aqua' : 'bg-white/5 hover:bg-white/10'}"><i class="bi ${m[1]} text-2xl text-aqua"></i><div class="font-bold text-white mt-1">${m[0]}</div><div class="text-xs text-slate-400">${m[2]}</div></button>`).join('');
+  $('dirs').innerHTML = DIRS.map((d, i) => `<button data-d="${i}" class="flex items-center gap-3 p-3 rounded-2xl text-left transition ${S.dir === i ? 'bg-aqua/15 ring-2 ring-aqua text-white' : 'bg-white/5 hover:bg-white/10'}"><i class="bi ${d[1]} text-xl text-aqua"></i>${d[0]}</button>`).join('');
+}
+const setMode = (m, lvl) => { S.mode = m; if (lvl) S.lvl = lvl; applyState(); refresh(); };
+$('power').onclick = () => { S.power = !S.power; applyState(); toast(S.power ? 'Toestel ingeschakeld' : 'Toestel uitgeschakeld'); };
+$('lvl').oninput = e => { S.lvl = +e.target.value; if (S.mode === 'Auto') S.mode = 'Handmatig'; applyState(); };
+$('modes').onclick = e => { const b = e.target.closest('[data-m]'); if (b) { setMode(b.dataset.m, b.dataset.m === 'Sleep Air' ? 1 : b.dataset.m === 'Boost' ? 3 : 0); toast('Modus: ' + b.dataset.m); } };
+$('dirs').onclick = e => { const b = e.target.closest('[data-d]'); if (b) { S.dir = +b.dataset.d; applyState(); toast('Luchtrichting aangepast'); } };
+$('summer').onchange = e => { applyState(); toast(e.target.checked ? 'Zomerstand aan: passieve koeling' : 'Zomerstand uit'); };
+$('lock').onchange = e => toast(e.target.checked ? 'Touchbediening vergrendeld' : 'Touchbediening ontgrendeld');
+let bt = null, bs = 0, prev = 'Auto', prevL = 2;
+function boost(min) {
+  clearInterval(bt); prev = S.mode === 'Boost' ? prev : S.mode; prevL = S.mode === 'Boost' ? prevL : S.lvl; bs = min * 60; setMode('Boost', 3); $('boostBox').classList.remove('hidden');
+  const t = () => { $('boostT').textContent = String(Math.floor(bs / 60)).padStart(2, '0') + ':' + String(bs % 60).padStart(2, '0'); };
+  t(); bt = setInterval(() => { bs--; t(); if (bs <= 0) { clearInterval(bt); $('boostBox').classList.add('hidden'); setMode(prev, prevL); toast('Boost afgelopen'); } }, 1000);
+  toast('Boost gestart voor ' + min + ' minuten');
+}
+document.querySelectorAll('.bb').forEach(b => b.onclick = () => boost(+b.dataset.b));
+document.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { const q = b.dataset.q; if (q === 'boost') boost(15); else if (q === 'sleep') { setMode('Sleep Air', 1); toast('Sleep Air gestart'); } else { clearInterval(bt); $('boostBox').classList.add('hidden'); setMode('Auto', 2); toast('Terug naar Auto'); } });
+
+/* ---------- Sleep Air ---------- */
+const night = []; { let v = 560; for (let i = 0; i < 60; i++) { v += i < 28 ? rnd(2, 22) : rnd(-20, 6); night.push(v); } }
+area('nChart', night, 600, 120, 'n');
+const nAvg = Math.round(night.reduce((a, b) => a + b) / night.length), nMax = Math.round(Math.max(...night)), ni = night.indexOf(Math.max(...night)), mins = 22 * 60 + 30 + Math.round(ni * 510 / 59);
+$('nAvg').textContent = nAvg + ' ppm'; $('nMax').textContent = nMax + ' ppm'; $('nAt').textContent = String(Math.floor(mins / 60) % 24).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0');
+/* Kleurzones: laat zien wat laag, matig en hoog is */
+const Z = (to, l, k) => ({ to, l, c: { g: 'bg-emerald-400', y: 'bg-sun', r: 'bg-coral' }[k], t: { g: 'text-emerald-400', y: 'text-sun', r: 'text-coral' }[k] });
+const zoneOf = (z, v) => z.find(x => v <= x.to) || z.at(-1);
+function zoneBar(z, min, max, val, unit, d) {
+  const span = max - min; let p = min;
+  const segs = z.map(x => { const w = (x.to - p) / span * 100; p = x.to; return `<div class="${x.c} h-full" style="width:${w}%"></div>`; }).join(''); p = min;
+  const lbl = z.map(x => { const w = (x.to - p) / span * 100; p = x.to; return `<div class="text-center truncate" style="width:${w}%">${x.l}</div>`; }).join('');
+  const pos = clamp((val - min) / span * 100, 0, 100);
+  return `<div class="relative mt-3"><div class="flex h-3 rounded-full overflow-hidden">${segs}</div><div class="absolute -top-1 h-5 w-1.5 rounded bg-white shadow -translate-x-1/2" style="left:${pos}%"></div></div><div class="flex text-[11px] mt-2 text-slate-300">${lbl}</div><div class="flex justify-between text-[11px] text-slate-500"><span>${nf(min, d)} ${unit}</span><span>${nf(max, d)} ${unit}</span></div>`;
+}
+const SZ = [Z(800, 'Fris', 'g'), Z(1200, 'Matig', 'y'), Z(1600, 'Hoog', 'r')];
+function drawSleep() { const v = +$('sC').value, z = zoneOf(SZ, v); $('sCv').textContent = v + ' ppm'; $('sCz').textContent = z.l; $('sCz').className = 'text-sm font-medium ' + z.t; $('sBar').innerHTML = zoneBar(SZ, 600, 1600, v, 'ppm', 0); }
+$('sC').oninput = drawSleep; drawSleep();
+$('sleepOn').onchange = e => { S.sleep = e.target.checked; toast(e.target.checked ? 'Sleep Air ingeschakeld' : 'Sleep Air uitgeschakeld'); refresh(); };
+
+/* ---------- Eigen modi ---------- */
+const mine = [{ n: 'Thuiswerken', lvl: 2, dir: 0, ic: 'bi-laptop' }, { n: 'Weg van huis', lvl: 1, dir: 0, ic: 'bi-box-arrow-right' }, { n: 'Gasten', lvl: 3, dir: 0, ic: 'bi-people' }];
+function drawModes() {
+  $('myModes').innerHTML = mine.map((m, i) => `<div class="rounded-2xl bg-white/5 p-4 flex items-start justify-between gap-2"><div><i class="bi ${m.ic} text-xl text-aqua"></i><div class="font-bold text-white mt-1">${m.n}</div><div class="text-xs text-slate-400">Stand ${m.lvl}, ${DIRS[m.dir][0].toLowerCase()}</div><button data-use="${i}" class="mt-3 px-4 py-1.5 rounded-full bg-aqua text-ink text-sm font-semibold active:scale-95 transition">Activeren</button></div><button data-rm="${i}" class="text-slate-500 hover:text-coral" aria-label="Verwijder ${m.n}"><i class="bi bi-trash"></i></button></div>`).join('') || '<p class="text-slate-400 text-sm">Nog geen eigen modi. Maak er hieronder een.</p>';
+}
+$('myModes').onclick = e => { const u = e.target.closest('[data-use]'), r = e.target.closest('[data-rm]'); if (u) { const m = mine[+u.dataset.use]; S.dir = m.dir; setMode(m.n, m.lvl); toast('Modus ' + m.n + ' geactiveerd'); } if (r) { mine.splice(+r.dataset.rm, 1); drawModes(); } };
+$('mAdd').onclick = () => { const n = $('mName').value.trim(); if (!n) return toast('Geef de modus eerst een naam.'); mine.push({ n, lvl: +$('mLvl').value, dir: +$('mDir').value, ic: 'bi-stars' }); $('mName').value = ''; drawModes(); toast('Modus ' + n + ' opgeslagen'); };
+
+/* ---------- Automatisaties ---------- */
+const autos = [{ n: 'CO₂-boost', d: 'Als CO₂ boven 1000 ppm, dan stand 3', on: 1 }, { n: 'Koken en poetsen', d: 'Als TVOC boven 0,4 mg/m³, dan stand 3', on: 1 }, { n: 'Ochtendlucht', d: 'Als tijd is 07:00 (ma tot vr), dan stand 2', on: 0 }];
+const DAYS = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'], dsel = new Set(DAYS);
+$('days').innerHTML = DAYS.map(d => `<button data-day="${d}" class="w-9 h-9 rounded-full text-xs bg-aqua text-ink font-bold transition">${d}</button>`).join('');
+$('days').onclick = e => { const b = e.target.closest('[data-day]'); if (!b) return; const on = dsel.has(b.dataset.day); on ? dsel.delete(b.dataset.day) : dsel.add(b.dataset.day); b.className = 'w-9 h-9 rounded-full text-xs transition ' + (on ? 'bg-white/10 text-slate-300' : 'bg-aqua text-ink font-bold'); };
+function drawAutos() {
+  $('autos').innerHTML = autos.map((a, i) => `<li class="py-3 flex items-center justify-between gap-3"><div><div class="font-medium text-white">${a.n}</div><div class="text-sm text-slate-400">${a.d}</div></div><div class="flex items-center gap-3"><div data-ai="${i}">${sw('au' + i, '', a.on)}</div><button data-del="${i}" class="text-slate-500 hover:text-coral" aria-label="Verwijder"><i class="bi bi-trash"></i></button></div></li>`).join('') || '<li class="py-3 text-slate-400 text-sm">Nog geen automatisaties.</li>';
+}
+$('autos').onchange = e => { autos[+e.target.id.slice(2)].on = e.target.checked ? 1 : 0; };
+$('autos').onclick = e => { const b = e.target.closest('[data-del]'); if (b) { autos.splice(+b.dataset.del, 1); drawAutos(); } };
+const AR = [
+  { k: 'CO₂ boven', u: 'ppm', min: 600, max: 1600, step: 50, def: 1000, d: 0, z: [Z(800, 'Fris', 'g'), Z(1200, 'Matig', 'y'), Z(1600, 'Hoog', 'r')], h: 'Onder 800 ppm is de lucht fris, boven 1200 ppm is ze hoog. Aanbevolen: 1000 ppm.' },
+  { k: 'TVOC boven', u: 'mg/m³', min: 0.1, max: 0.8, step: 0.05, def: 0.4, d: 2, z: [Z(0.3, 'Laag', 'g'), Z(0.5, 'Matig', 'y'), Z(0.8, 'Hoog', 'r')], h: 'Onder 0,3 mg/m³ is laag, boven 0,5 mg/m³ is hoog. Aanbevolen: 0,4 mg/m³.' },
+  { k: 'Fijnstof boven', u: 'µg/m³', min: 5, max: 50, step: 1, def: 25, d: 0, z: [Z(12, 'Zuiver', 'g'), Z(25, 'Matig', 'y'), Z(50, 'Hoog', 'r')], h: 'Onder 12 µg/m³ is zuiver, boven 25 µg/m³ is hoog. Aanbevolen: 25 µg/m³.' },
+  { k: 'Temperatuur boven', u: '°C', min: 18, max: 35, step: 0.5, def: 24, d: 1, z: [Z(23, 'Comfortabel', 'g'), Z(25, 'Warm', 'y'), Z(35, 'Te warm', 'r')], h: 'Tot 23 °C is comfortabel. Een kamer wordt zelden warmer dan 30 °C. Aanbevolen: 24 °C.' },
+  { k: 'Temperatuur onder', u: '°C', min: 10, max: 22, step: 0.5, def: 17, d: 1, z: [Z(16, 'Te koud', 'r'), Z(19, 'Fris', 'y'), Z(22, 'Comfortabel', 'g')], h: 'Onder 16 °C voelt een kamer koud aan. Aanbevolen: 17 °C voor een slaapkamer.' },
+  { k: 'Tijd is', time: true }
+];
+function drawTrig() {
+  const a = AR[$('aTrig').selectedIndex];
+  if (a.time) { $('aBox').innerHTML = '<label class="text-sm text-slate-300">Tijdstip<input id="aT" type="time" value="07:00" class="mt-1 block rounded-2xl bg-ink border border-white/10 px-3 py-2 text-white"></label>'; return; }
+  $('aBox').innerHTML = `<div class="flex flex-wrap justify-between items-baseline gap-2"><span class="text-sm text-slate-300">Grenswaarde</span><span><b id="aV" class="text-white text-lg"></b> <span id="aZ" class="text-sm font-medium"></span></span></div><input id="aS" type="range" min="${a.min}" max="${a.max}" step="${a.step}" value="${a.def}" class="mt-3 w-full accent-aqua" aria-label="Grenswaarde"><div id="aBar"></div><p class="text-xs text-slate-400 mt-2">${a.h}</p>`;
+  const upd = () => { const v = +$('aS').value, z = zoneOf(a.z, v); $('aV').textContent = nf(v, a.d) + ' ' + a.u; $('aZ').textContent = z.l; $('aZ').className = 'text-sm font-medium ' + z.t; $('aBar').innerHTML = zoneBar(a.z, a.min, a.max, v, a.u, a.d); };
+  $('aS').oninput = upd; upd();
+}
+$('aTrig').onchange = drawTrig; drawTrig();
+$('aAdd').onclick = () => {
+  const n = $('aName').value.trim(), a = AR[$('aTrig').selectedIndex];
+  if (!n) return toast('Geef de automatisering eerst een naam.');
+  if (!dsel.size) return toast('Kies minstens één dag.');
+  const val = a.time ? $('aT').value : nf(+$('aS').value, a.d) + ' ' + a.u;
+  const dg = dsel.size === 7 ? 'elke dag' : [...dsel].join(', ');
+  autos.push({ n, d: `Als ${a.k.toLowerCase()} ${val} (${dg}), dan ${$('aAct').value.toLowerCase()}`, on: 1 });
+  $('aName').value = ''; drawAutos(); toast('Automatisering ' + n + ' toegevoegd');
+};
+
+/* ---------- Filter Care ---------- */
+const TOTAL = 183; let left = 57;
+function drawFilter() {
+  document.querySelectorAll('.fdays').forEach(e => e.textContent = left); setRing('fC', left / TOTAL);
+  const warn = left <= +$('fRem').value; $('fRing').setAttribute('class', 'w-full h-full -rotate-90 ' + (warn ? 'text-coral' : 'text-sun'));
+  $('fBadge').textContent = warn ? 'Binnenkort vervangen' : 'In orde'; $('fBadge').className = 'inline-block mt-4 px-4 py-1 rounded-full text-sm ' + (warn ? 'bg-coral/20 text-coral' : 'bg-emerald-500/20 text-emerald-300');
+  $('fDate').textContent = new Date(Date.now() + left * 864e5).toLocaleDateString('nl-BE', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+$('fRem').onchange = () => { drawFilter(); refresh(); };
+$('fTest').onclick = () => { toast('Testmelding: uw filter moet over ' + left + ' dagen vervangen worden.'); addNote('bi-bell', 'text-sun', 'Testmelding Filter Care verstuurd'); };
+$('fReset').onclick = () => { left = TOTAL; drawFilter(); refresh(); addNote('bi-arrow-repeat', 'text-aqua', 'Filter vervangen, timer van 6 maanden gestart'); toast('Filtertimer gereset: 6 maanden'); };
+
+/* ---------- Meldingen ---------- */
+const notes = [{ ic: 'bi-funnel', c: 'text-sun', t: 'Uw filter moet over 57 dagen vervangen worden', w: 'Vandaag 08:12', u: 1 }, { ic: 'bi-moon-stars', c: 'text-violet', t: 'Sleep Air verhoogde vannacht om 02:40 even de stand (CO₂ boven 1000 ppm)', w: 'Vandaag 02:40', u: 1 }, { ic: 'bi-cloud-arrow-down', c: 'text-aqua', t: 'Firmware v1.4.2 is geïnstalleerd', w: 'Gisteren 14:03', u: 0 }, { ic: 'bi-wifi', c: 'text-emerald-400', t: 'Toestel is opnieuw verbonden met wifi', w: '3 dagen geleden', u: 0 }];
+function addNote(ic, c, t) { notes.unshift({ ic, c, t, w: 'Zonet', u: 1 }); drawNotes(); }
+function drawNotes() {
+  $('notes').innerHTML = notes.map(n => `<li class="flex gap-3 p-3 rounded-2xl ${n.u ? 'bg-white/10' : 'bg-white/5'}"><i class="bi ${n.ic} ${n.c} text-xl"></i><div class="flex-1"><div class="text-white text-sm">${n.t}</div><div class="text-xs text-slate-400">${n.w}</div></div>${n.u ? '<span class="w-2 h-2 mt-2 rounded-full bg-coral"></span>' : ''}</li>`).join('');
+  document.querySelectorAll('.unread').forEach(e => e.textContent = notes.filter(n => n.u).length);
+}
+$('readAll').onclick = () => { notes.forEach(n => n.u = 0); drawNotes(); };
+
+drawModes(); drawAutos(); drawFilter(); drawNotes(); applyState();
+go(NAV.some(n => '#' + n[0] === location.hash) ? location.hash.slice(1) : 'over');
+</script>
+</body>
+</html>
